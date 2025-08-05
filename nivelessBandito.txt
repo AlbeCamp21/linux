@@ -1,0 +1,32 @@
+ssh bandit0@bandit.labs.overthewire.org -p 2220
+
+nivel0 -> nivel1: ZjLjTmM6FvvyRnrb2rfNWOZOTa6ip5If
+nivel1 -> nivel2: 263JGJPfgU6LtdEvgfWU1XP5yac29mFx
+nivel2 -> nivel3: MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx
+nivel3 -> nivel4: 2WmrDFRmJIq3IPxneAaMGhap0pFhF3NJ
+nivel4 -> nivel5: 4oQYVPkxZOOEOO5pTW81FB8j8lxXGUQw
+nivel5 -> nivel6: HWasnPhtq9AVKe0dmk45nxy20cvUa6EG
+nivel6 -> nivel7: morbNTDkSW6jIlUc0ymOdMaLnOlFVAaj
+nivel7 -> nivel8: dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc
+nivel8 -> nivel9: 4CKMh1JI91bUIZZPXDqGanal4xvAg0JM
+nivel9 -> nivel10: FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
+nivel10 -> nivel11: dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr
+nivel11 -> nivel12: 7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4
+nivel12 -> nivel13: FO5dwFsc0cbaIiH0h8J2eUks2vdTDwAn
+nivel13 -> nivel14: MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
+nivel14 -> nivel15: 8xCjnmgoKbGLhHFAZlGE5Tmu4M2tKJQo
+nivel15 -> nivel16: kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx
+nivel16 -> nivel17:
+nivel17 -> nivel18:
+nivel18 -> nivel19:
+nivel19 -> nivel20:
+nivel20 -> nivel21:
+nivel21 -> nivel22:
+nivel22 -> nivel23:
+nivel23 -> nivel24:
+nivel24 -> nivel25:
+nivel25 -> nivel26:
+nivel26 -> nivel27:
+nivel27 -> nivel28:
+nivel28 -> nivel29:
+nivel29 -> nivel30:
