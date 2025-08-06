@@ -27,3 +27,6 @@ for i in $(seq 1 254); do
     done; wait
 done; wait
 echo -e "\n${moradoColor}[!] Scaneo completo.${finColor}\n"
+
+# Recuperando el cursor
+tput cnorm
