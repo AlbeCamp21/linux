@@ -20,10 +20,10 @@ nivel16 -> nivel17: EReVavePLFHtFlFsjn3hyzMlvSuSAcRD
 nivel17 -> nivel18: x2gLTTjFwMOhQ8oWNbMN362QKxfRqGlO
 nivel18 -> nivel19: cGWpMaKXVwDUNgPAVJbWYuGHVn9zl3j8
 nivel19 -> nivel20: 0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
-nivel20 -> nivel21:
-nivel21 -> nivel22:
-nivel22 -> nivel23:
-nivel23 -> nivel24:
+nivel20 -> nivel21: EeoULMCra2q0dSkYj561DX7s1CpBuOBt
+nivel21 -> nivel22: tRae0UfB9v0UzbCdn9cY0gQnds9GF58Q
+nivel22 -> nivel23: 0Zf11ioIjMVN551jX3CmStKLYqjk54Ga
+nivel23 -> nivel24: gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8
 nivel24 -> nivel25:
 nivel25 -> nivel26:
 nivel26 -> nivel27:
