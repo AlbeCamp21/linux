@@ -17,9 +17,9 @@ nivel13 -> nivel14: MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
 nivel14 -> nivel15: 8xCjnmgoKbGLhHFAZlGE5Tmu4M2tKJQo
 nivel15 -> nivel16: kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx
 nivel16 -> nivel17: EReVavePLFHtFlFsjn3hyzMlvSuSAcRD
-nivel17 -> nivel18:
-nivel18 -> nivel19:
-nivel19 -> nivel20:
+nivel17 -> nivel18: x2gLTTjFwMOhQ8oWNbMN362QKxfRqGlO
+nivel18 -> nivel19: cGWpMaKXVwDUNgPAVJbWYuGHVn9zl3j8
+nivel19 -> nivel20: 0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
 nivel20 -> nivel21:
 nivel21 -> nivel22:
 nivel22 -> nivel23:
