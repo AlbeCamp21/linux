@@ -24,9 +24,13 @@ nivel20 -> nivel21: EeoULMCra2q0dSkYj561DX7s1CpBuOBt
 nivel21 -> nivel22: tRae0UfB9v0UzbCdn9cY0gQnds9GF58Q
 nivel22 -> nivel23: 0Zf11ioIjMVN551jX3CmStKLYqjk54Ga
 nivel23 -> nivel24: gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8
-nivel24 -> nivel25:
-nivel25 -> nivel26:
-nivel26 -> nivel27:
-nivel27 -> nivel28:
-nivel28 -> nivel29:
-nivel29 -> nivel30:
+nivel24 -> nivel25: iCi86ttT4KSNe1armKiwbQNmB3YJP3q4
+nivel25 -> nivel26: s0773xxkk0MXfdqOfPRVr9L3jJBUOgCZ
+nivel26 -> nivel27: upsNCc7vzaRDx6oZC6GiR6ERwe1MowGB
+nivel27 -> nivel28: Yz9IpL0sBcCeuG7m9uQFt8ZNpS4HZRcN
+nivel28 -> nivel29: 4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
+nivel29 -> nivel30: qp30ex3VLz5MDG1n91YowTv4Q8l7CDZL
+nivel30 -> nivel31:
+nivel31 -> nivel32:
+nivel32 -> nivel33:
+nivel33 -> nivel34:
