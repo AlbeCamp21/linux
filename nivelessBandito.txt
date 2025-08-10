@@ -30,7 +30,6 @@ nivel26 -> nivel27: upsNCc7vzaRDx6oZC6GiR6ERwe1MowGB
 nivel27 -> nivel28: Yz9IpL0sBcCeuG7m9uQFt8ZNpS4HZRcN
 nivel28 -> nivel29: 4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
 nivel29 -> nivel30: qp30ex3VLz5MDG1n91YowTv4Q8l7CDZL
-nivel30 -> nivel31:
-nivel31 -> nivel32:
-nivel32 -> nivel33:
-nivel33 -> nivel34:
+nivel30 -> nivel31: fb5S2xb7bRyFmAvQYQGEqsbhVyJqhnDy
+nivel31 -> nivel32: 3O9RfhqyAlVBEZpVb6LYStshZoqoSx5K
+nivel32 -> nivel33: tQdtbs5D5i2vJwkO8mEyYEyTL8izoeJ0
