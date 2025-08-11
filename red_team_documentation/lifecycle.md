@@ -42,6 +42,7 @@
    - Puede usar métodos automáticos para enviar los datos a servidores remotos o medios físicos como memorias USB.  
    - Por ejemplo, programar la transferencia automática de documentos sensibles a un servidor externo o copiar archivos a un dispositivo físico para su extracción.  
 
+```mermaid
 flowchart TD
     A[Extensive OSINT]
     B[Initial Access & Execution]
@@ -55,3 +56,4 @@ flowchart TD
     C --> D
     D --> E
     E --> F
+```
