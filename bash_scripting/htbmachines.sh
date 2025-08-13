@@ -50,9 +50,15 @@ function updateFiles(){
             echo -e "\n${rojoColor}[!]${finColor} ${grisColor}La herramienta${finColor} ${moradoColor}$cmd${finColor} ${grisColor}no está instalada.${finColor}"
             read -p "¿Desea instalar $cmd ahora? (s/n): " respuesta
             if [[ "$respuesta" =~ ^[sS]$ ]]; then
-                sudo apt update && sudo apt install -y $cmd
+                echo -e "\n${amarilloColor}[!]${finColor} ${grisColor}Instalando${finColor} ${moradoColor}"$cmd"${finColor}${grisColor}...${finColor}\n"
+                if [ "$cmd" == "js-beautify" ]; then
+                    sudo apt update -y >/dev/null 2>&1 && sudo apt install -y jsbeautifier >/dev/null 2>&1
+                else
+                    sudo apt update -y >/dev/null 2>&1 && sudo apt install -y moreutils >/dev/null 2>&1
+                fi
+                echo -e "\n${verdeColor}[+]${finColor} ${grisColor}Herramienta${finColor} ${moradoColor}"$cmd"${finColor}${grisColor} instalada correctamente\n${finColor}"
             else
-                echo -e "${rojoColor}[!]${finColor} ${grisColor}No se puede continuar sin $cmd. Saliendo...${finColor}"
+                echo -e "${rojoColor}\n[!]${finColor} ${grisColor}No se puede continuar sin "$cmd". Saliendo...${finColor}"
                 tput cnorm
                 exit 1
             fi
