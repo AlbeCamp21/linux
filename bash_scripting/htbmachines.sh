@@ -25,6 +25,7 @@ function helpPanel(){
     echo -e "\t${moradoColor}u)${finColor} ${grisColor}Descargar o actualizar archivos necesarios${finColor}"
     echo -e "\t${moradoColor}m)${finColor} ${grisColor}Buscar por un nombre de máquina${finColor}"
     echo -e "\t${moradoColor}i)${finColor} ${grisColor}Buscar por dirección IP${finColor}"
+    echo -e "\t${moradoColor}d)${finColor} ${grisColor}Buscar por la dificultad de las máquinas${finColor}"
     echo -e "\t${moradoColor}y)${finColor} ${grisColor}Obtener link de la resolución de la máquina en Youtube${finColor}"
     echo -e "\t${moradoColor}h)${finColor} ${grisColor}Mostrar panel de ayuda${finColor}"
 }
@@ -88,15 +89,28 @@ function getYoutubeLink(){
     fi
 }
 
+function getMachinesDifficulty(){
+    difficulty="$1"
+    commandValidator="$(cat bundle.js | grep "dificultad: \"$difficulty\"")"
+    results_check="$(cat bundle.js | grep "dificultad: \"$difficulty\"" -B 5 | grep name | awk 'NF {print $NF}' | tr -d '"' | tr -d "," | column)"
+    if [ -z "$commandValidator" ]; then
+        echo -e "\n${rojoColor}[!]${finColor} ${grisColor}La dificultad${finColor} ${moradoColor}$difficulty${finColor} ${grisColor}no existe, opciones válidas:\n\n\t- Fácil\n\t- Media\n\t- Difícil\n\t- Insane${finColor}"
+    else
+        echo -e "\n${verdeColor}[+]${finColor} ${grisColor}Listando máquinas de dificultad${finColor} ${moradoColor}$difficulty${finColor}${grisColor}:${finColor}\n"
+        cat bundle.js | grep "dificultad: \"$difficulty\"" -B 5 | grep name | awk 'NF {print $NF}' | tr -d '"' | tr -d "," | column
+    fi
+}
+
 # Indicadores
 declare -i parameter_counter=0  # "-i" para integer
 
-while getopts "m:ui:y:h" arg; do  # Los que necesitan argumentos se les pone con ":"
+while getopts "m:ui:y:hd:" arg; do  # Los que necesitan argumentos se les pone con ":"
     case $arg in 
         m) machineName="$OPTARG"; let parameter_counter+=1;;  # "$OPTARG" para agarrar el argumento del parámetro
         u) let parameter_counter+=2;;
         i) ipAddress="$OPTARG"; let parameter_counter+=3;;
         y) machineName="$OPTARG"; let parameter_counter+=4;;
+        d) difficulty="$OPTARG"; let parameter_counter+=5;;
         h) ;;  # siempre se acaba en ";;"
     esac
 done
@@ -109,6 +123,8 @@ elif [ $parameter_counter -eq 3 ]; then
     searchIP $ipAddress
 elif [ $parameter_counter -eq 4 ]; then
     getYoutubeLink $machineName
+elif [ $parameter_counter -eq 5 ]; then
+    getMachinesDifficulty $difficulty
 else
     helpPanel
 fi
