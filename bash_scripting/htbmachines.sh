@@ -27,6 +27,7 @@ function helpPanel(){
     echo -e "\t${moradoColor}i)${finColor} ${grisColor}Buscar por dirección IP${finColor}"
     echo -e "\t${moradoColor}d)${finColor} ${grisColor}Buscar por la dificultad de las máquinas${finColor}"
     echo -e "\t${moradoColor}o)${finColor} ${grisColor}Buscar por el sistema operativo de las máquinas${finColor}"
+    echo -e "\t${moradoColor}s)${finColor} ${grisColor}Buscar por skill${finColor}"
     echo -e "\t${moradoColor}y)${finColor} ${grisColor}Obtener link de la resolución de la máquina en Youtube${finColor}"
     echo -e "\t${moradoColor}h)${finColor} ${grisColor}Mostrar panel de ayuda${finColor}"
 }
@@ -126,6 +127,17 @@ function getOSDifficultyMachines(){
     fi
 }
 
+function getSkill(){
+    skill="$1"
+    verify_skill="$(cat bundle.js | grep "skills:" -B 6 | grep -i "$skill" -B 6 | grep "name:" | awk 'NF{print $NF}' | tr -d '"' | tr -d ",")"
+    if [ -z "$verify_skill" ]; then
+        echo -e "\n${rojoColor}[!]${finColor} ${grisColor}No se han encontrado máquinas con la skill${finColor} ${moradoColor}"$skill"${finColor}"
+    else
+        echo -e "\n${verdeColor}[+]${finColor} ${grisColor}Mostrando máquinas que incluyan la skill${finColor} ${moradoColor}"$skill"${finColor}${grisColor}:${finColor}\n"
+        cat bundle.js | grep "skills:" -B 6 | grep -i "Active Directory" -B 6 | grep "name:" | awk 'NF{print $NF}' | tr -d '"' | tr -d ","
+    fi
+}
+
 # Indicadores
 declare -i parameter_counter=0  # "-i" para integer
 
@@ -133,7 +145,7 @@ declare -i parameter_counter=0  # "-i" para integer
 declare -i chivato_difficulty=0
 declare -i chivato_os=0
 
-while getopts "m:ui:y:hd:o:" arg; do  # Los que necesitan argumentos se les pone con ":"
+while getopts "m:ui:y:hd:o:s:" arg; do  # Los que necesitan argumentos se les pone con ":"
     case $arg in 
         m) machineName="$OPTARG"; let parameter_counter+=1;;  # "$OPTARG" para agarrar el argumento del parámetro
         u) let parameter_counter+=2;;
@@ -141,6 +153,7 @@ while getopts "m:ui:y:hd:o:" arg; do  # Los que necesitan argumentos se les pone
         y) machineName="$OPTARG"; let parameter_counter+=4;;
         d) difficulty="$OPTARG"; chivato_difficulty=1; let parameter_counter+=5;;
         o) os="$OPTARG"; chivato_os=1; let parameter_counter+=6;;
+        s) skill="$OPTARG"; let parameter_counter+=7;;
         h) ;;  # siempre se acaba en ";;"
     esac
 done
@@ -157,6 +170,8 @@ elif [ $parameter_counter -eq 5 ]; then
     getMachinesDifficulty $difficulty
 elif [ $parameter_counter -eq 6 ]; then
     getOSMachines $os
+elif [ $parameter_counter -eq 7 ]; then
+    getSkill "$skill"
 elif [ $chivato_difficulty -eq 1 ] && [ $chivato_os -eq 1 ]; then
     getOSDifficultyMachines $difficulty $os
 else
