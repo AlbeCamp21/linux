@@ -25,6 +25,7 @@ function helpPanel(){
     echo -e "\t${moradoColor}u)${finColor} ${grisColor}Descargar o actualizar archivos necesarios${finColor}"
     echo -e "\t${moradoColor}m)${finColor} ${grisColor}Buscar por un nombre de máquina${finColor}"
     echo -e "\t${moradoColor}i)${finColor} ${grisColor}Buscar por dirección IP${finColor}"
+    echo -e "\t${moradoColor}y)${finColor} ${grisColor}Obtener link de la resolución de la máquina en Youtube${finColor}"
     echo -e "\t${moradoColor}h)${finColor} ${grisColor}Mostrar panel de ayuda${finColor}"
 }
 
@@ -76,14 +77,26 @@ function searchIP(){
     fi
 }
 
+function getYoutubeLink(){
+    machineName="$1"
+    commandValidator="$(cat bundle.js | grep "name: \"$machineName\"")"
+    if [ -z "$commandValidator" ]; then
+        echo -e "\n${rojoColor}[!]${finColor} ${grisColor}La máquina${finColor} ${moradoColor}$machineName${finColor} ${grisColor}no existe, intente con otra${finColor}"
+    else
+        youtubeLink="$(cat bundle.js | awk "/name: \"$machineName\"/,/resuelta:/" | grep -vE "id:|sku:|resuelta" | tr -d '"' | tr -d "," | sed 's/^ *//' | grep youtube | awk 'NF{print $NF}')"
+        echo -e "\n${verdeColor}[+]${finColor} ${grisColor}El tutorial de la máquina${grisColor} ${moradoColor}$machineName${finColor} ${grisColor}está en el siguiente enlace:${finColor} ${azulColor}$youtubeLink${finColor}"
+    fi
+}
+
 # Indicadores
 declare -i parameter_counter=0  # "-i" para integer
 
-while getopts "m:ui:h" arg; do  # Los que necesitan argumentos se les pone con ":"
+while getopts "m:ui:y:h" arg; do  # Los que necesitan argumentos se les pone con ":"
     case $arg in 
-        m) machineName=$OPTARG; let parameter_counter+=1;;  # "$OPTARG" para agarrar el argumento del parámetro
+        m) machineName="$OPTARG"; let parameter_counter+=1;;  # "$OPTARG" para agarrar el argumento del parámetro
         u) let parameter_counter+=2;;
-        i) ipAddress=$OPTARG; let parameter_counter+=3;;
+        i) ipAddress="$OPTARG"; let parameter_counter+=3;;
+        y) machineName="$OPTARG"; let parameter_counter+=4;;
         h) ;;  # siempre se acaba en ";;"
     esac
 done
@@ -94,6 +107,8 @@ elif [ $parameter_counter -eq 2 ]; then
     updateFiles
 elif [ $parameter_counter -eq 3 ]; then
     searchIP $ipAddress
+elif [ $parameter_counter -eq 4 ]; then
+    getYoutubeLink $machineName
 else
     helpPanel
 fi
