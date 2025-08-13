@@ -44,6 +44,20 @@ function searchMachine(){
 }
 
 function updateFiles(){
+    # Verificar dependencias
+    for cmd in js-beautify sponge; do
+        if ! command -v $cmd &>/dev/null; then
+            echo -e "\n${rojoColor}[!]${finColor} ${grisColor}La herramienta${finColor} ${moradoColor}$cmd${finColor} ${grisColor}no está instalada.${finColor}"
+            read -p "¿Desea instalar $cmd ahora? (s/n): " respuesta
+            if [[ "$respuesta" =~ ^[sS]$ ]]; then
+                sudo apt update && sudo apt install -y $cmd
+            else
+                echo -e "${rojoColor}[!]${finColor} ${grisColor}No se puede continuar sin $cmd. Saliendo...${finColor}"
+                tput cnorm
+                exit 1
+            fi
+        fi
+    done
     tput civis  # Ocultar cursor
     if [ ! -f bundle.js ]; then  # Comprobando si no existe el archivo
         echo -e "\n${amarilloColor}[+]${finColor} ${grisColor}Descargando archivos necesarios...${finColor}"
@@ -107,7 +121,7 @@ function getOSMachines(){
     os="$1"
     commandValidator="$(cat bundle.js | grep "so: \"$os\"")"
     if [ -z "$commandValidator" ]; then
-        echo -e "\n${rojoColor}[!]${finColor} ${grisColor}El sistema operativo${finColor} ${moradoColor}$os${finColor} ${grisColor}no existe, intente con otra${finColor}"
+        echo -e "\n${rojoColor}[!]${finColor} ${grisColor}El sistema operativo${finColor} ${moradoColor}$os${finColor} ${grisColor}no existe, opciones válidas:\n\n\t- Windows\n\t- Linux${finColor}"
     else
         echo -e "\n${verdeColor}[+]${finColor} ${grisColor}Mostrando máquinas con sistema operativo${finColor} ${moradoColor}$os${finColor}\n"
         cat bundle.js | grep "so: \"$os\"" -B 5 | grep "name: " | awk 'NF {print $NF}' | tr -d '"' | tr -d "," | column
@@ -129,12 +143,12 @@ function getOSDifficultyMachines(){
 
 function getSkill(){
     skill="$1"
-    verify_skill="$(cat bundle.js | grep "skills:" -B 6 | grep -i "$skill" -B 6 | grep "name:" | awk 'NF{print $NF}' | tr -d '"' | tr -d ",")"
+    verify_skill="$(cat bundle.js | grep "skills:" -B 6 | grep -wi "$skill" -B 6 | grep "name:" | awk 'NF{print $NF}' | tr -d '"' | tr -d ",")"
     if [ -z "$verify_skill" ]; then
         echo -e "\n${rojoColor}[!]${finColor} ${grisColor}No se han encontrado máquinas con la skill${finColor} ${moradoColor}"$skill"${finColor}"
     else
         echo -e "\n${verdeColor}[+]${finColor} ${grisColor}Mostrando máquinas que incluyan la skill${finColor} ${moradoColor}"$skill"${finColor}${grisColor}:${finColor}\n"
-        cat bundle.js | grep "skills:" -B 6 | grep -i "Active Directory" -B 6 | grep "name:" | awk 'NF{print $NF}' | tr -d '"' | tr -d ","
+        cat bundle.js | grep "skills:" -B 6 | grep -wi "$skill" -B 6 | grep "name:" | awk 'NF{print $NF}' | tr -d '"' | tr -d ","
     fi
 }
 
