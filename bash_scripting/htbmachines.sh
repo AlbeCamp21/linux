@@ -24,13 +24,19 @@ function helpPanel(){
     echo -e "\n${amarilloColor}[+]${finColor} ${grisColor}Uso:${grisColor}"
     echo -e "\t${moradoColor}u)${finColor} ${grisColor}Descargar o actualizar archivos necesarios${finColor}"
     echo -e "\t${moradoColor}m)${finColor} ${grisColor}Buscar por un nombre de máquina${finColor}"
+    echo -e "\t${moradoColor}i)${finColor} ${grisColor}Buscar por dirección IP${finColor}"
     echo -e "\t${moradoColor}h)${finColor} ${grisColor}Mostrar panel de ayuda${finColor}"
 }
 
 function searchMachine(){
     machineName="$1"
-    echo $machineName
-    # También podría haber sido simplement: echo $1
+    command="$(cat bundle.js | awk "/name: \"$machineName\"/,/resuelta:/" | grep -vE "id:|sku|resuelta" | tr -d '"' | tr -d "," | sed 's/^ *//')"
+    if [ -z "$command" ]; then
+        echo -e "\n${rojoColor}[!]${finColor} ${grisColor}La máquina${finColor} ${moradoColor}$machineName${finColor} ${grisColor}no existe, intente con otra${finColor}"
+    else
+        echo -e "\n${verdeColor}[+]${finColor} ${grisColor}Listando las propiedades de la máquina${finColor} ${moradoColor}$machineName${finColor}${grisColor}:${finColor}\n"
+        echo "$command"
+    fi    
 }
 
 function updateFiles(){
@@ -59,14 +65,25 @@ function updateFiles(){
     tput cnorm  # Mostrar cursor
 }
 
+function searchIP(){
+    ipAddress="$1"
+    machineName="$(cat bundle.js | grep "ip: \"$ipAddress\"" -B 3 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',')"
+    if [ -z "$machineName" ]; then
+        echo -e "\n${rojoColor}[!]${finColor} ${grisColor}La IP${finColor} ${moradoColor}$ipAddress${finColor} ${grisColor}no existe, intente con otra${finColor}"
+    else
+        echo -e "\n${verdeColor}[+]${finColor} ${grisColor}La máquina correspondiente para la IP${finColor} ${azulColor}$ipAddress${finColor} ${grisColor}es${finColor} ${moradoColor}$machineName${finColor}"
+    fi
+}
+
 # Indicadores
 declare -i parameter_counter=0  # "-i" para integer
 
-while getopts "m:uh" arg; do  # Los que necesitan argumentos se les pone con ":"
+while getopts "m:ui:h" arg; do  # Los que necesitan argumentos se les pone con ":"
     case $arg in 
         m) machineName=$OPTARG; let parameter_counter+=1;;  # "$OPTARG" para agarrar el argumento del parámetro
         u) let parameter_counter+=2;;
-        h) helpPanel;;  # siempre se acaba en ";;"
+        i) ipAddress=$OPTARG; let parameter_counter+=3;;
+        h) ;;  # siempre se acaba en ";;"
     esac
 done
 
@@ -74,6 +91,8 @@ if [ $parameter_counter -eq 1 ]; then
     searchMachine $machineName
 elif [ $parameter_counter -eq 2 ]; then
     updateFiles
+elif [ $parameter_counter -eq 3 ]; then
+    searchIP $ipAddress
 else
     helpPanel
 fi
