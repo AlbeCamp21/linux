@@ -105,7 +105,7 @@ function getMachinesDifficulty(){
 function getOSMachines(){
     os="$1"
     commandValidator="$(cat bundle.js | grep "so: \"$os\"")"
-    if [ -z $commandValidator ]; then
+    if [ -z "$commandValidator" ]; then
         echo -e "\n${rojoColor}[!]${finColor} ${grisColor}El sistema operativo${finColor} ${moradoColor}$os${finColor} ${grisColor}no existe, intente con otra${finColor}"
     else
         echo -e "\n${verdeColor}[+]${finColor} ${grisColor}Mostrando máquinas con sistema operativo${finColor} ${moradoColor}$os${finColor}\n"
@@ -113,8 +113,25 @@ function getOSMachines(){
     fi
 }
 
+function getOSDifficultyMachines(){
+    difficulty="$1"
+    os="$2"
+    commandValidator_difficulty="$(cat bundle.js | grep "dificultad: \"$difficulty\"")"
+    commandValidator_os="$(cat bundle.js | grep "so: \"$os\"")"
+    if [ -z "$commandValidator_difficulty" ] || [ -z "$commandValidator_os" ]; then
+        echo -e "\n${rojoColor}[!]${finColor} ${grisColor}Alguno de los parámetros no es válido, intente nuevamente${finColor}"
+    else
+        echo -e "\n${verdeColor}[+]${finColor} ${grisColor}Listando máquinas por dificultad${finColor} ${moradoColor}$difficulty${finColor} ${grisColor}y sistema operativo${finColor} ${moradoColor}$os${finColor}\n"
+        cat bundle.js | grep "so: \"$os\"" -C 4 | grep "dificultad: \"$difficulty\"" -B 5 | grep "name: " | awk 'NF {print $NF}' | tr -d '"' | tr -d "," | column
+    fi
+}
+
 # Indicadores
 declare -i parameter_counter=0  # "-i" para integer
+
+# Chivatos
+declare -i chivato_difficulty=0
+declare -i chivato_os=0
 
 while getopts "m:ui:y:hd:o:" arg; do  # Los que necesitan argumentos se les pone con ":"
     case $arg in 
@@ -122,8 +139,8 @@ while getopts "m:ui:y:hd:o:" arg; do  # Los que necesitan argumentos se les pone
         u) let parameter_counter+=2;;
         i) ipAddress="$OPTARG"; let parameter_counter+=3;;
         y) machineName="$OPTARG"; let parameter_counter+=4;;
-        d) difficulty="$OPTARG"; let parameter_counter+=5;;
-        o) os="$OPTARG"; let parameter_counter+=6;;
+        d) difficulty="$OPTARG"; chivato_difficulty=1; let parameter_counter+=5;;
+        o) os="$OPTARG"; chivato_os=1; let parameter_counter+=6;;
         h) ;;  # siempre se acaba en ";;"
     esac
 done
@@ -140,6 +157,8 @@ elif [ $parameter_counter -eq 5 ]; then
     getMachinesDifficulty $difficulty
 elif [ $parameter_counter -eq 6 ]; then
     getOSMachines $os
+elif [ $chivato_difficulty -eq 1 ] && [ $chivato_os -eq 1 ]; then
+    getOSDifficultyMachines $difficulty $os
 else
     helpPanel
 fi
