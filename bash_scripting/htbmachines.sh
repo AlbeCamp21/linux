@@ -30,12 +30,12 @@ function helpPanel(){
 
 function searchMachine(){
     machineName="$1"
-    command="$(cat bundle.js | awk "/name: \"$machineName\"/,/resuelta:/" | grep -vE "id:|sku|resuelta" | tr -d '"' | tr -d "," | sed 's/^ *//')"
-    if [ -z "$command" ]; then
+    commandValidator="$(cat bundle.js | grep "name: \"$machineName\"")"
+    if [ -z "$commandValidator" ]; then
         echo -e "\n${rojoColor}[!]${finColor} ${grisColor}La máquina${finColor} ${moradoColor}$machineName${finColor} ${grisColor}no existe, intente con otra${finColor}"
     else
         echo -e "\n${verdeColor}[+]${finColor} ${grisColor}Listando las propiedades de la máquina${finColor} ${moradoColor}$machineName${finColor}${grisColor}:${finColor}\n"
-        echo "$command"
+        cat bundle.js | awk "/name: \"$machineName\"/,/resuelta:/" | grep -vE "id:|sku|resuelta" | tr -d '"' | tr -d "," | sed 's/^ *//'
     fi    
 }
 
@@ -67,8 +67,9 @@ function updateFiles(){
 
 function searchIP(){
     ipAddress="$1"
+    commandValidator="$(cat bundle.js | grep "ip: \"$ipAddress\"")"
     machineName="$(cat bundle.js | grep "ip: \"$ipAddress\"" -B 3 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',')"
-    if [ -z "$machineName" ]; then
+    if [ -z "$commandValidator" ]; then
         echo -e "\n${rojoColor}[!]${finColor} ${grisColor}La IP${finColor} ${moradoColor}$ipAddress${finColor} ${grisColor}no existe, intente con otra${finColor}"
     else
         echo -e "\n${verdeColor}[+]${finColor} ${grisColor}La máquina correspondiente para la IP${finColor} ${azulColor}$ipAddress${finColor} ${grisColor}es${finColor} ${moradoColor}$machineName${finColor}"
