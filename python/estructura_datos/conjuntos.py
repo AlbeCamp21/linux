@@ -50,5 +50,5 @@ users_facebook = {"Albe", "Camp", "Felpo", "Zoey"}
 user_x = {"Albe", "Felpo", "Memento"}
 users_only_facebook = users_facebook.difference(user_x)  # Usuarios que están en Facebook y no en X
 users_only_x = user_x.difference(users_facebook)  # Usuarios que están en X y no en Facebook
-print(users_only_facebook)
-print(users_only_x)
+print(users_only_facebook)  # {'Camp', 'Zoey'}
+print(users_only_x)  # {'Memento'}
