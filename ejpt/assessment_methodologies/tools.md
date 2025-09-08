@@ -8,6 +8,14 @@ Herramienta de línea de comandos para realizar consultas DNS.
 - Permite medir tiempos de respuesta y depurar problemas de DNS.  
 - También se usa para probar **transferencias de zona (AXFR)** y detectar configuraciones inseguras.  
 
+### `dirb`  
+Herramienta para **fuerza bruta de directorios y archivos web**.  
+- Busca rutas ocultas en servidores web usando **wordlists**.  
+- Permite probar varias extensiones de archivos (`-X .php,.bak,.zip`) para encontrar backups o scripts.  
+- Útil para detectar **directorios no indexados** o archivos sensibles.  
+- Soporta escaneo recursivo para descubrir rutas profundas.  
+- Ideal para enumeración de contenido en pruebas de penetración web.  
+
 ### `dnsdumpster.com`  
 Servicio en línea para **reconocimiento DNS** de un dominio.  
 - Identifica registros (A, MX, NS, TXT).  
@@ -39,6 +47,14 @@ Herramienta en Perl enfocada en **descubrir hosts y subdominios**.
 - Intenta localizar hosts internos expuestos.  
 - Muy usada en la fase de **reconocimiento pasivo y activo** en pentesting.  
 
+### `httrack`  
+Herramienta para **descargar o hacer mirror de sitios web**.  
+- Crea una copia local completa de un sitio accesible públicamente.  
+- Descarga páginas HTML, imágenes, scripts y archivos referenciados.  
+- Permite inspeccionar archivos **no visibles en la navegación normal**.  
+- Útil para análisis offline o descubrimiento de archivos ocultos.  
+- Puede ser configurada para seguir enlaces recursivamente y respetar reglas de robots.txt.  
+
 ### `netcraft.com`  
 Servicio en línea de **reconocimiento de infraestructura web**.  
 - Identifica el **sistema operativo** del servidor.  
@@ -46,6 +62,23 @@ Servicio en línea de **reconocimiento de infraestructura web**.
 - Obtiene datos de **hosting y proveedor de servicios**.  
 - Muestra información sobre **certificados SSL/TLS**.  
 - Puede dar detalles históricos del dominio (tecnologías pasadas, hosting previo).  
+
+### `netdiscover`  
+Herramienta de descubrimiento de red basada en ARP.  
+- Detecta **hosts activos en la red local** sin necesidad de ping.  
+- Útil en redes donde el **ICMP está bloqueado**.  
+- Permite identificar **direcciones IP, MAC y fabricantes** de los dispositivos.  
+- Puede ejecutarse en modo pasivo (escucha ARP) o activo (envía ARP requests).  
+- Ideal para auditorías rápidas de redes WiFi o LAN.  
+
+### `nmap`  
+Herramienta avanzada de **escaneo de red y seguridad**.  
+- Permite descubrir **hosts activos** en un rango de IP.  
+- Detecta **puertos abiertos, servicios y versiones** en ejecución.  
+- Puede identificar el **sistema operativo y tipo de dispositivo**.  
+- Incluye scripts (NSE – Nmap Scripting Engine) para **detección de vulnerabilidades**.  
+- Soporta múltiples tipos de escaneo: TCP SYN, UDP, ICMP, entre otros.  
+- La opción `-Pn` **omite el ping inicial** y fuerza el escaneo de puertos incluso si el host no responde a ICMP (útil en Windows o redes que bloquean ping).  
 
 ### `sublist3r`  
 Herramienta en Python para **enumerar subdominios**.  
