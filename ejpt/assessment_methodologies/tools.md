@@ -47,6 +47,13 @@ Herramienta en Perl enfocada en **descubrir hosts y subdominios**.
 - Intenta localizar hosts internos expuestos.  
 - Muy usada en la fase de **reconocimiento pasivo y activo** en pentesting.  
 
+### `fping`
+Herramienta rápida para **sondear múltiples hosts mediante ICMP Echo (ping)** — ideal para descubrimiento masivo.  
+- Envía pings **en paralelo** a muchos hosts (más rápido que `ping` uno a uno).  
+- Soporta sondas por **host único, lista, rango y redes (CIDR)**: `fping 192.168.1.1`, `fping -g 192.168.1.0/24`, `fping -f hosts.txt`.
+- Ideal para **descubrimiento por redes o listas grandes** en auditorías internas; salida fácil de parsear para scripts.  
+- Limitaciones: depende de **ICMP** (firewalls pueden bloquearlo); no reemplaza escaneo de puertos (`nmap`).  
+
 ### `httrack`  
 Herramienta para **descargar o hacer mirror de sitios web**.  
 - Crea una copia local completa de un sitio accesible públicamente.  
