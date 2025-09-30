@@ -1,5 +1,22 @@
 # Herramientas
 
+### `cadaver`  
+Cliente WebDAV de línea de comandos, similar a un cliente FTP para servidores WebDAV.  
+- Permite **navegar, listar, subir, descargar, mover y borrar** archivos y directorios en un endpoint WebDAV.  
+- Útil para interacción manual y verificación de permisos (lectura/escritura).  
+- Soporta autenticación básica y digest; puede pedir credenciales al conectarse.  
+- Comandos comunes dentro de la sesión `cadaver`: `ls`, `cd`, `pwd`, `put archivo`, `get archivo`, `delete archivo`, `mkdir`.  
+- Ejemplo de conexión: `cadaver http://target.com/webdav/` (luego autenticar si es necesario).  
+- Muy usado en pentesting para probar si un servidor permite **subida de archivos** o gestión remota de ficheros.
+
+### `davtest`  
+Herramienta de auditoría para **probar la capacidad de subida y ejecución** en servidores WebDAV.  
+- Intenta subir archivos con múltiples extensiones (`.php`, `.asp`, `.jsp`, etc.) y luego verifica si son accesibles/executables.  
+- Permite detectar configuraciones inseguras que permiten subir webshells o artefactos ejecutables.  
+- Soporta parámetros de autenticación para targets protegidos (`-auth user:pass`).  
+- Uso típico: `davtest -url http://target.com/webdav/` y opciones adicionales para extensiones o rutas.  
+- Muy útil en etapas de explotación de aplicaciones web basadas en WebDAV.
+
 ### `dig`  
 Herramienta de línea de comandos para realizar consultas DNS.  
 - Permite consultar registros como **A, AAAA, MX, NS, TXT, SOA, CNAME**.  
