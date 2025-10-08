@@ -140,3 +140,12 @@ Herramienta que consulta la base de datos de registros de dominios.
 - Indica servidores DNS asociados y hosting.  
 - Puede revelar datos de contacto (si no están ocultos con privacidad).  
 - También sirve para investigar **rangos de IP** y ASN.  
+
+### `xfreerdp3`  
+Cliente RDP (Remote Desktop Protocol) de la suite **FreeRDP** (binario `xfreerdp` v3.x).  
+- Conecta a escritorios/servidores Windows vía **RDP** (puerto por defecto 3389).  
+- Soporta **autenticación** (usuario/contraseña, dominio, NLA) y modos de seguridad (`/sec:nla|tls|rdp`).  
+- Permite **redirigir recursos locales**: unidades (`/drive:NAME,PATH`), portapapeles (`/clipboard`), impresoras, sonido y micrófono. 
+- Utilidad en pentesting autorizado: comprobar credenciales (`/auth-only`), probar redirecciones y verificar configuración de certificados (`/cert-ignore`, `/cert-tofu`).  
+- Parámetros útiles: `/v:<host[:port]>`, `/u:`, `/p:`, `/d:`, `/log-level:TRACE|DEBUG|INFO|WARN|ERROR`.
+
