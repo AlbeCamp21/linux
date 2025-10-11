@@ -9,6 +9,16 @@ Cliente WebDAV de línea de comandos, similar a un cliente FTP para servidores W
 - Ejemplo de conexión: `cadaver http://target.com/webdav/` (luego autenticar si es necesario).  
 - Muy usado en pentesting para probar si un servidor permite **subida de archivos** o gestión remota de ficheros.
 
+### `crackmapexec`  
+Framework de post-explotación y enumeración para entornos Windows (CME).  
+- Herramienta en Python que permite **escanear y operar a gran escala** sobre protocolos Windows: SMB, WinRM, LDAP, MSSQL, etc.  
+- Ideal para **paralelizar tareas** (mismas credenciales contra múltiples hosts) y ejecutar módulos o comprobaciones automatizadas.  
+- Soporta autenticación con usuario/contraseña, hashes NTLM y autenticación de dominio (`-u`, `-p`, `-H`, `-d`).  
+- Permite enumeración de recursos: `--shares`, `--users`, `--pass-pol`, `--local-auth`, entre otros.  
+- Dispone de un sistema de **módulos** (`-M <module>`) para tareas comunes (dump de credenciales, persistencia, recolección de información).  
+- Uso típico para lateral movement, enumeración masiva y ejecución de módulos en entornos Windows autorizados.  
+- Ejemplos de comandos: `crackmapexec winrm <ip> -u <user> -p <wordlist passwords>`, `crackmapexec winrm <ip> -u <user> -p <password> -x "<command>"`
+
 ### `davtest`  
 Herramienta de auditoría para **probar la capacidad de subida y ejecución** en servidores WebDAV.  
 - Intenta subir archivos con múltiples extensiones (`.php`, `.asp`, `.jsp`, etc.) y luego verifica si son accesibles/executables.  
@@ -55,6 +65,15 @@ Herramienta avanzada de **reconocimiento DNS** en Python.
 - Permite **fuerza bruta de subdominios** con diccionarios.  
 - Realiza consultas inversas para identificar hosts por IP.  
 - Exporta resultados en múltiples formatos (CSV, JSON, XML).  
+
+### `evil-winrm`  
+Cliente de WinRM para **obtener shells remotos** en máquinas Windows (PowerShell interactivo).  
+- Proporciona un prompt de PowerShell contra el servicio **WinRM** usando credenciales válidas o hashes NTLM.  
+- Permite **subida/descarga de archivos**, ejecución de comandos, y ejecución de scripts PowerShell localmente.  
+- Soporta autenticación por contraseña, hash NTLM (`-H`), Kerberos (con configuración adicional) y SSL (`-S`).  
+- Opciones habituales: `-i` IP/host, `-u` usuario, `-p` contraseña, `-H` hash NTLM, `-P` puerto, `-s` ruta de scripts locales, `-l` para log.  
+- Muy usado en fases de post-explotación y lateral movement cuando WinRM está habilitado en la red objetivo.  
+- Ejemplos de uso: `evil-winrm -u <user> -p <password> -i <ip>`
 
 ### `fierce`  
 Herramienta en Perl enfocada en **descubrir hosts y subdominios**.  
