@@ -160,6 +160,15 @@ Herramienta que consulta la base de datos de registros de dominios.
 - Puede revelar datos de contacto (si no están ocultos con privacidad).  
 - También sirve para investigar **rangos de IP** y ASN.  
 
+### `wpscan`  
+Herramienta especializada para **auditorías de seguridad en sitios WordPress**.  
+- Detecta versión del core, **enumera temas y plugins** y comprueba si existen vulnerabilidades conocidas consultando la WPScan Vulnerability Database.  
+- Soporta **enumeración de usuarios**, fingerprinting, fuerza bruta contra el formulario de login y exportación de reportes.  
+- Para obtener la información de vulnerabilidades necesita un **API token** (registro en wpscan.com); sin token el escaneo funciona pero no mostrará detalles CVE/DB.
+- Soporta comprobaciones de login por fuerza bruta con wordlists; **usar solo contra objetivos autorizados**.  
+- Ejemplo de comandos: `wpscan --url <url> --usernames <user> --passwords <WORDLIST>`, `wpscan --url <url> -e u`
+
+
 ### `xfreerdp3`  
 Cliente RDP (Remote Desktop Protocol) de la suite **FreeRDP** (binario `xfreerdp` v3.x).  
 - Conecta a escritorios/servidores Windows vía **RDP** (puerto por defecto 3389).  
