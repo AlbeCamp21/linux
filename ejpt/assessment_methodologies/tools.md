@@ -96,7 +96,19 @@ Herramienta para **descargar o hacer mirror de sitios web**.
 - Descarga páginas HTML, imágenes, scripts y archivos referenciados.  
 - Permite inspeccionar archivos **no visibles en la navegación normal**.  
 - Útil para análisis offline o descubrimiento de archivos ocultos.  
-- Puede ser configurada para seguir enlaces recursivamente y respetar reglas de robots.txt.  
+- Puede ser configurada para seguir enlaces recursivamente y respetar reglas de robots.txt. 
+
+### `incognito`  
+Plugin de Meterpreter para listar, robar e impersonar *access tokens* en Windows.  
+- Comandos principales: `load incognito`, `list_tokens -u`, `steal_token <proc|user>`, `impersonate_token <token>`, `revert_to_self`.  
+- Permite ejecutar acciones con los permisos de otro usuario sin contraseña (útil para escalar privilegios).  
+- Limitaciones: requiere tokens accesibles en memoria y permisos (p. ej. `SeDebugPrivilege`); puede ser detectado por EDR.
+
+### `meterpreter`  
+Payload avanzado de Metasploit que proporciona una sesión interactiva en memoria.  
+- Corre en memoria y usa un canal cifrado víctima→atacante.  
+- Comandos clave: `sysinfo`, `getuid`, `ps`, `pgrep <name>`, `migrate <PID>`, `shell`, `upload`/`download`, `hashdump`.  
+- Uso típico: explotar → recibir sesión Meterpreter → `sysinfo`/`getuid` → `ps` → `migrate` → post-explotación.
 
 ### `netcraft.com`  
 Servicio en línea de **reconocimiento de infraestructura web**.  
@@ -139,6 +151,13 @@ Herramienta de recolección de información mediante **OSINT**.
 - Se integra con buscadores, PGP servers, y redes sociales.  
 - Muy útil en la fase de **footprinting** de un objetivo.  
 
+### `UACMe`  
+Colección de PoCs/métodos para bypass de UAC (educativo).  
+- Contiene métodos numerados (p. ej. `23`) que explotan DLL hijack, COM, IFileOperation, etc., para ejecutar payloads en integridad alta.  
+- Flujo típico: generar `backdoor.exe` (`msfvenom`), subir `Akagi64.exe` + `backdoor.exe`, ejecutar `Akagi64.exe <método> <ruta_backdoor>`.  
+- Resultado: si funciona, el payload se ejecuta elevado (o se obtiene token elevado) y el handler recibe una sesión con mayores privilegios.  
+- Advertencia: solo en entornos autorizados; puede causar inestabilidad y desencadenar detecciones de seguridad.
+
 ### `wafw00f`  
 Herramienta para detectar **Web Application Firewalls (WAF)**.  
 - Identifica si un sitio web tiene un WAF activo.  
@@ -167,7 +186,6 @@ Herramienta especializada para **auditorías de seguridad en sitios WordPress**.
 - Para obtener la información de vulnerabilidades necesita un **API token** (registro en wpscan.com); sin token el escaneo funciona pero no mostrará detalles CVE/DB.
 - Soporta comprobaciones de login por fuerza bruta con wordlists; **usar solo contra objetivos autorizados**.  
 - Ejemplo de comandos: `wpscan --url <url> --usernames <user> --passwords <WORDLIST>`, `wpscan --url <url> -e u`
-
 
 ### `xfreerdp3`  
 Cliente RDP (Remote Desktop Protocol) de la suite **FreeRDP** (binario `xfreerdp` v3.x).  
