@@ -23,7 +23,7 @@
   - Credenciales obtenidas aquí pueden reutilizarse en **SSH** o **MySQL**.  
   - SMB expone muchas vulnerabilidades históricas (ej: EternalBlue).  
 - **Comandos**:  
-  - Linux: `smbclient -L //<ip>` , `smbmap -H <ip>`  
+  - Linux: `smbclient -L //<ip> -U <user>` , `smbmap -H <ip>`, `smbclient //<ip>/<share>`  
   - Windows: `net use \\\\<ip>\\share`  
 
 ---

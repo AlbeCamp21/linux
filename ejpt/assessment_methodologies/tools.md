@@ -50,6 +50,7 @@ Herramienta para **fuerza bruta de directorios y archivos web**.
 - Útil para detectar **directorios no indexados** o archivos sensibles.  
 - Soporta escaneo recursivo para descubrir rutas profundas.  
 - Ideal para enumeración de contenido en pruebas de penetración web.  
+- En caso de analizar una página donde sea necesario login, podemos añadir la opción `-u <user>:<password>`
 
 ### `dnsdumpster.com`  
 Servicio en línea para **reconocimiento DNS** de un dominio.  
@@ -73,6 +74,15 @@ Herramienta avanzada de **reconocimiento DNS** en Python.
 - Permite **fuerza bruta de subdominios** con diccionarios.  
 - Realiza consultas inversas para identificar hosts por IP.  
 - Exporta resultados en múltiples formatos (CSV, JSON, XML).  
+
+### `enum4linux`  
+Herramienta en Perl para **enumeración y recolección de información de SMB/Windows** desde Linux.  
+- Realiza consultas a servicios SMB/NetBIOS para obtener usuarios, shares, políticas y versiones.  
+- Puede ejecutar: enumeración de usuarios (`-U`), listas de shares (`-S`), recopilación de información sobre el dominio y el host (`-a` para todo).  
+- Soporta intentos de autenticación nulos (null sessions) y consultas que aprovechan servicios expuestos sin credenciales.  
+- Útil para auditorías de red internas y reconocimiento en entornos Windows desde una máquina Linux.  
+- Limitaciones: depende de que SMB esté accesible y a menudo requiere permisos para ciertas operaciones; puede ser ruidosa en la red.  
+- Ejemplos de uso: `enum4linux -a target.example.com`, `enum4linux -U target.example.com`, `enum4linux -S target.example.com`
 
 ### `evil-winrm`  
 Cliente de WinRM para **obtener shells remotos** en máquinas Windows (PowerShell interactivo).  
@@ -106,11 +116,41 @@ Herramienta para **descargar o hacer mirror de sitios web**.
 - Útil para análisis offline o descubrimiento de archivos ocultos.  
 - Puede ser configurada para seguir enlaces recursivamente y respetar reglas de robots.txt. 
 
+### `hydra`  
+Herramienta de fuerza bruta paralela para servicios de red y autenticación.  
+- Soporta multitud de protocolos y módulos (`ssh`, `ftp`, `smtp`, `http-get`, `http-post-form`, `http-form-post`, `rdp`, `smb`, `mysql`, `postgresql`, entre otros).  
+- Permite usar un usuario fijo o listas de usuarios y contraseñas (`-l`, `-L`, `-p`, `-P`).  
+- Alto grado de paralelismo y control de hilos (`-t`) para ajustar velocidad/threads.  
+- Opciones para salida y control: `-o` (archivo de resultados), `-V` (verbose), `-f` (terminar al encontrar credenciales), `-s` (puerto), `-S` (SSL/TLS).  
+- Útil en auditorías de contraseñas y pruebas de acceso autorizado; no adecuado para flujos que requieren CSRF dinámico o tokens por sesión sin preprocesamiento.  
+- Ejemplos de uso:  
+  - `hydra -l <user> -P <wordlist password> <IP> http-get /`  
+  - `hydra -L <wordlist user> -p <password> -t 8 -f ssh://<IP>`  
+  - `hydra -l <user> -P <wordlist passwor> target.com http-post-form "/login.php:username=^USER^&password=^PASS^:Invalid credentials"`  
+  - `hydra -l <user> -p <password> -s <service's port> -t 4 -o hydra_out.txt ssh://<IP>`  
+
+
 ### `incognito`  
 Plugin de Meterpreter para listar, robar e impersonar *access tokens* en Windows.  
 - Comandos principales: `load incognito`, `list_tokens -u`, `steal_token <proc|user>`, `impersonate_token <token>`, `revert_to_self`.  
 - Permite ejecutar acciones con los permisos de otro usuario sin contraseña (útil para escalar privilegios).  
 - Limitaciones: requiere tokens accesibles en memoria y permisos (p. ej. `SeDebugPrivilege`); puede ser detectado por EDR.
+
+### `kiwi`  
+`kiwi` es una extensión/módulo de **Meterpreter (Metasploit)** que expone funciones similares a Mimikatz desde una sesión Meterpreter.  
+- Permite ejecutar rutinas tipo Mimikatz desde una sesión Meterpreter sin tener que subir el binario `mimikatz.exe` por separado.  
+- Ofrece operaciones sobre credenciales, tickets Kerberos y manipulaciones de LSA/Kerberos integradas en el contexto de Meterpreter.  
+- Ventajas: integración con Metasploit (gestión de sesiones, handlers y módulos post-explotación), ejecución en memoria y flujo más directo dentro de una sesión activa.  
+- Limitaciones: requiere una sesión Meterpreter activa y permisos adecuados; puede ser detectado por soluciones de seguridad.  
+- Ejemplos de uso dentro de una sesión Meterpreter: `meterpreter > load kiwi`, `meterpreter > kiwi_cmd` (invocar comandos/funciones disponibles de kiwi), `meterpreter > help` (ver comandos cargados tras `load kiwi`)
+
+### `mimikatz`  
+Herramienta (Windows .exe) para **extracción y manipulación de credenciales/local security authority** en sistemas Windows.  
+- Permite interactuar con componentes de seguridad de Windows: LSA, Kerberos, NTLM, tickets, certificados y hashes.  
+- Funcionalidades comunes: extraer contraseñas en texto claro, volcar hashes/kerberos tickets, manipular tickets (Golden/Pass-the-Ticket), y operaciones de privilegios.  
+- Riesgo/uso: ampliamente usada en post-explotación / red team y por atacantes; debe usarse únicamente en entornos autorizados y controlados.  
+- Requisitos: privilegios elevados o acceso a memoria del proceso de lsass.exe para ciertas operaciones; puede ser detectado por EDR/AV.  
+- Ejemplos de comandos: `mimikatz.exe "privilege::debug"`, `"sekurlsa::logonpasswords"`, `mimikatz.exe "kerberos::ptc /export"`, `mimikatz.exe "lsadump::sam"`, `mimikatz.exe "crypto::certificates"`
 
 ### `msfvenom`
 Herramienta de Metasploit para **generar payloads** en múltiples formatos (PE, DLL, scripts, etc.) usada en pruebas de penetración en entornos controlados.  
