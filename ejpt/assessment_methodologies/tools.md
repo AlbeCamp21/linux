@@ -185,6 +185,14 @@ Herramienta avanzada de **escaneo de red y seguridad**.
 - Soporta múltiples tipos de escaneo: TCP SYN, UDP, ICMP, entre otros.  
 - La opción `-Pn` **omite el ping inicial** y fuerza el escaneo de puertos incluso si el host no responde a ICMP (útil en Windows o redes que bloquean ping).  
 
+### `smbmap`  
+Herramienta para **enumeración y acceso a recursos SMB/Windows** desde Linux, pensada para realizar auditorías de permisos en shares de red.  
+- Lista **shares** disponibles en un host o dominio, muestra **permisos (lectura/escritura)** por share y permite interactuar con archivos (lectura, búsqueda y —en muchas instalaciones— descarga/subida).  
+- Comprueba qué recursos compartidos están accesibles con unas credenciales dadas o con sesión anónima, y evaluar si se pueden extraer datos sensibles desde esos shares.  
+- Soporta usuario/contraseña, dominio y autenticación nula (null session). Se suele pasar `-H <host>` o `--target <host>`, `-u <user>`, `-p <pass>` y opcionalmente `-d <domain>`.  
+- Funcionalidades importantes: enumerar shares, mostrar permisos, listar contenido de un share, buscar archivos por patrón/regex dentro de los shares para localizar secretos (contraseñas, backups, keys), etc.
+- Ejemplos: `smbmap -H <IP> -u <user> -p <password>`, `smbmap -H <IP> -u '' -p ''`, `smbmap -H <IP> -u <user> -p <password> -r 'password|backup|id_rsa'` (busca archivos cuyo nombre coincida con el patrón dentro de los shares accesibles)
+
 ### `sublist3r`  
 Herramienta en Python para **enumerar subdominios**.  
 - Usa motores de búsqueda (Google, Bing, Yahoo, Baidu, Ask).  
