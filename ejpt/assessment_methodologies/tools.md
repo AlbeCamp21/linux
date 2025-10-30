@@ -136,6 +136,15 @@ Plugin de Meterpreter para listar, robar e impersonar *access tokens* en Windows
 - Permite ejecutar acciones con los permisos de otro usuario sin contraseña (útil para escalar privilegios).  
 - Limitaciones: requiere tokens accesibles en memoria y permisos (p. ej. `SeDebugPrivilege`); puede ser detectado por EDR.
 
+### `john (John the Ripper)`  
+Herramienta para auditoría y recuperación de contraseñas en entornos autorizados.  
+- Prueba hashes (p. ej. `/etc/shadow`) con diccionarios, reglas, máscaras e incremental para encontrar contraseñas.  
+- Formatos soportados: md5crypt, sha256crypt, sha512crypt (`$6$`), bcrypt/2y, NT, Kerberos, LDAP y muchos más (Jumbo añade aún más).  
+- Modos de ataque: diccionario + reglas, máscaras (pattern-based), incremental (fuerza bruta optimizada) y ataques combinados.   
+- Herramientas de extracción (tipo *\*2john*): utilidades para convertir formatos/proveedores a hashes que John entiende — p. ej. `pdf2john`, `zip2john`, `rar2john`, `ssh2john`, `pfx2john`.   
+- Ejemplos: `john --format=<format> --wordlist=<wordlist> --rules <archivo>`, `john --mask='?u?l?l?l?l?d?d' <archivo>`
+
+
 ### `kiwi`  
 `kiwi` es una extensión/módulo de **Meterpreter (Metasploit)** que expone funciones similares a Mimikatz desde una sesión Meterpreter.  
 - Permite ejecutar rutinas tipo Mimikatz desde una sesión Meterpreter sin tener que subir el binario `mimikatz.exe` por separado.  
