@@ -8,6 +8,14 @@ Herramienta para **envenenamiento ARP (ARP spoofing/poisoning)** en redes LAN (p
 - Riesgos y ética: altamente intrusivo — usar **solo** en entornos autorizados; puede interrumpir comunicación y ser detectado por sistemas de defensa.  
 - Ejemplos: `arpspoof -i eth0 -t <IP_TARGET> <IP_GATEWAY>`, `arpspoof -i wlan0 -t 192.168.1.5 -r 192.168.1.1`
 
+### `autoroute`  
+Script de Metasploit para **crear rutas de red a través de sesiones de Meterpreter comprometidas** (pivoting).  
+- Qué hace: configura tablas de enrutamiento en Metasploit para que el tráfico hacia subredes específicas pase a través de una sesión activa de Meterpreter, permitiendo alcanzar redes internas no accesibles directamente.  
+- Uso típico en pruebas: después de comprometer un host (pivote), se usa para escanear y atacar otros sistemas en subredes internas mediante módulos de Metasploit.  
+- Opciones comunes: `-s` para especificar subred (CIDR notation), `-n` para máscara de red (obsoleta), `-p` para mantener ruta persistente, `list` para ver rutas activas, `delete` para eliminar rutas.  
+- Riesgos y ética: permite movimiento lateral en redes autorizadas; monitorear uso ya que puede generar tráfico significativo y ser detectado por sistemas de seguridad.  
+- Ejemplos: `run autoroute -s 10.1.1.0/24`, `run autoroute -s 192.168.50.0/24 -p`, `run autoroute -s 172.16.0.0/16`, `run autoroute list`, `run autoroute delete -s 10.1.1.0/24`
+
 ### `cadaver`  
 Cliente WebDAV de línea de comandos, similar a un cliente FTP para servidores WebDAV.  
 - Permite **navegar, listar, subir, descargar, mover y borrar** archivos y directorios en un endpoint WebDAV.  
@@ -225,6 +233,14 @@ Cliente para **consultas NetBIOS name service** (parte de Samba).
 - Soporta interrogaciones puntuales (`name`, `GROUP`) y puede usarse para hacer consultas a NBNS en un host concreto con `-U`/`-R` según versión.  
 - Limitaciones: requiere que NetBIOS/NBNS esté disponible en la red; menos útil en redes modernas que usan solo DNS.  
 - Ejemplos: `nmblookup -A <IP>`, `nmblookup 'WORKGROUP<1>' <IP>`
+
+### `portfwd`  
+Comando de Meterpreter para **reenvío de puertos locales a través de sesiones comprometidas** (port forwarding).  
+- Qué hace: redirige conexiones entrantes en un puerto local de la máquina atacante a un puerto específico en un sistema objetivo accesible desde el host comprometido, creando túneles para herramientas externas.  
+- Uso típico en pruebas: permitir que herramientas como Nmap, navegadores web o otros scanners accedan a servicios en redes internas a través de un pivote, cuando `autoroute` solo funciona para módulos de Metasploit.  
+- Comandos comunes: `add` para crear reenvío, `-l` para puerto local, `-p` para puerto remoto, `-r` para IP remota, `list` para ver reenvíos activos, `delete` para eliminar reenvíos.  
+- Limitaciones: requiere sesión Meterpreter activa; el tráfico pasa por el controlador de Metasploit; no es tan eficiente como `socks4a`/`proxychains` para múltiples conexiones.  
+- Ejemplos: `portfwd add -l 8080 -p 80 -r 192.168.1.100`, `portfwd add -l 443 -p 443 -r 10.0.0.15`, `portfwd list`, `portfwd delete -l 8080 -p 80 -r 192.168.1.100`
 
 ### `scp`  
 `scp` (secure copy) para **copiar archivos/dir de forma segura sobre SSH**.  
