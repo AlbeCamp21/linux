@@ -132,6 +132,15 @@ Herramienta rápida para **sondear múltiples hosts mediante ICMP Echo (ping)** 
 - Ideal para **descubrimiento por redes o listas grandes** en auditorías internas; salida fácil de parsear para scripts.  
 - Limitaciones: depende de **ICMP** (firewalls pueden bloquearlo); no reemplaza escaneo de puertos (`nmap`).  
 
+### `gobuster`
+Herramienta rápida para enumerar **directorios, archivos y subdominios** mediante fuerza bruta con wordlists.  
+- Usa peticiones HTTP de alta velocidad para descubrir **rutas ocultas que no aparecen en el sitio**.  
+- Permite modo de enumeración **DNS y VHOST**, útil para encontrar subdominios no públicos.  
+- Admite **filtros de extensiones** para enfocar la búsqueda en tipos específicos de archivos.  
+- Puede excluir **códigos HTTP irrelevantes** para reducir ruido en los resultados.  
+- Ideal para **reconocimiento inicial** en aplicaciones web antes de pruebas más profundas.  
+- Ejemplo: `gobuster dir -u http://target.com -w common.txt -x php,txt` ; `gobuster dns -d dominio.com -w subdomains.txt`  
+
 ### `httrack`  
 Herramienta para **descargar o hacer mirror de sitios web**.  
 - Crea una copia local completa de un sitio accesible públicamente.  
@@ -216,6 +225,15 @@ Herramienta de descubrimiento de red basada en ARP.
 - Permite identificar **direcciones IP, MAC y fabricantes** de los dispositivos.  
 - Puede ejecutarse en modo pasivo (escucha ARP) o activo (envía ARP requests).  
 - Ideal para auditorías rápidas de redes WiFi o LAN.  
+
+### `nikto`  
+Escáner de vulnerabilidades web que revisa **configuraciones inseguras, archivos sensibles y versiones obsoletas** en servidores HTTP/HTTPS.  
+- Realiza miles de **pruebas conocidas** para detectar fallas típicas en servidores web.  
+- Identifica **archivos expuestos y directorios inseguros** que podrían filtrar información.  
+- Analiza **banners, módulos y versiones** para encontrar software vulnerable.  
+- Detecta **configuraciones erróneas** en Apache, Nginx, IIS y otros servidores.  
+- Es ruidoso y detectable, pero muy útil para **auditorías rápidas y completas**.  
+- Ejemplo: `nikto -h http://target.com` ; `nikto -h https://10.0.0.5 -p 443 -Tuning x6`  
 
 ### `nmap`  
 Herramienta avanzada de **escaneo de red y seguridad**.  
