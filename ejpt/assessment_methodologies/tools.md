@@ -226,6 +226,15 @@ Herramienta de descubrimiento de red basada en ARP.
 - Puede ejecutarse en modo pasivo (escucha ARP) o activo (envía ARP requests).  
 - Ideal para auditorías rápidas de redes WiFi o LAN.  
 
+### `netexec`  
+Framework de post-explotación y **auditoría de servicios remotos** (sucesor de CrackMapExec) orientado a entornos Windows, Linux y protocolos corporativos.  
+- Permite autenticación contra múltiples **protocolos**: SMB, WinRM, SSH, RDP, MSSQL, LDAP, FTP, entre otros, facilitando pruebas a gran escala.  
+- Soporta credenciales en texto claro, hashes NTLM, Kerberos, claves SSH y combinaciones para validación de acceso autorizado.  
+- Incluye **módulos** para enumeración, consulta de políticas, identificación de configuraciones débiles, recolección de información y ejecución remota (según protocolo permitido).  
+- Muy útil para tareas de **movimiento lateral, auditoría de credenciales, inventario de servicios y validación de accesos** dentro de entornos controlados.  
+- Ofrece salidas parseables para integrarlo en pipelines o análisis automatizados; sucesor activo de CME con mejoras constantes.  
+- Ejemplos: `netexec smb <IP_target> -u <user> -p <password>`, `netexec ssh <IP_target> -u <user> -p <password>`, `netexec smb <IP_target> -u <user> -H <NTLM_hash>`, `netexec smb <IP_target> -u <user> -P <password_wordlist.txt>`  
+
 ### `nikto`  
 Escáner de vulnerabilidades web que revisa **configuraciones inseguras, archivos sensibles y versiones obsoletas** en servidores HTTP/HTTPS.  
 - Realiza miles de **pruebas conocidas** para detectar fallas típicas en servidores web.  
