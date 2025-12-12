@@ -117,6 +117,21 @@ Cliente de WinRM para **obtener shells remotos** en máquinas Windows (PowerShel
 - Muy usado en fases de post-explotación y lateral movement cuando WinRM está habilitado en la red objetivo.  
 - Ejemplos de uso: `evil-winrm -u <user> -p <password> -i <ip>`
 
+### `exiftool`
+Herramienta para **leer, escribir y manipular metadatos** en archivos (imágenes, documentos, videos).
+- Compatible con EXIF, IPTC, XMP, PDF, PNG, JPG, TIFF, MP4 y muchos más.
+- Útil para extracción de información oculta (metadatos GPS, cámaras, software usado).
+- Permite modificar o borrar metadatos de forma precisa.
+- Muy usado en **forense digital**, OSINT y análisis de imágenes.
+- Ejemplos: `exiftool archivo.jpg`, `exiftool -gps* archivo.jpg`, `exiftool -All= archivo.jpg` (elimina metadatos), `exiftool -Comment="Texto" archivo.jpg`
+
+### `fcrackzip`
+Herramienta para **recuperar contraseñas de archivos ZIP protegidos**.
+- Permite ataques de fuerza bruta, diccionario y basado en máscaras.
+- Compatible con ZIP cifrados con métodos clásicos.
+- Puede probar múltiples hilos para acelerar ataques.
+- Ejemplos: `fcrackzip -b -c a1 -l 1-6 archivo.zip`, `fcrackzip -D -p rockyou.txt archivo.zip`, `fcrackzip -v -u -D -p wordlist.txt archivo.zip`
+
 ### `fierce`  
 Herramienta en Perl enfocada en **descubrir hosts y subdominios**.  
 - Localiza subdominios mediante **wordlists**.  
@@ -306,6 +321,21 @@ Herramienta multipropósito que permite crear, redirigir y manipular conexiones 
 - Capaz de traducir entre protocolos o tipos de sockets distintos, actuando como puente flexible entre servicios.
 - Funciona como alternativa más avanzada que netcat para depurar servicios, redirigir tráfico y realizar pruebas de red complejas.
 - Ejemplos: `socat TCP:IP_target:PORT EXEC:/bin/sh` · `socat TCP-LISTEN:PORT,fork EXEC:/bin/sh` · `socat TCP-LISTEN:LOCAL_PORT,fork TCP:IP_target:REMOTE_PORT` · `socat OPENSSL:IP_target:PORT STDOUT`
+
+### `steghide`
+Herramienta para **ocultar y extraer datos** dentro de archivos (steganografía).
+- Soporta formatos: JPEG, BMP, WAV, AU.
+- Permite incrustar ficheros usando **clave/passphrase**.
+- Usa compresión y cifrado para proteger el contenido.
+- Ideal para prácticas de esteganografía clásica.
+- Ejemplos: `steghide embed -cf imagen.jpg -ef secreto.txt`, `steghide extract -sf imagen.jpg`
+
+### `stegseek`
+Herramienta ultrarrápida para **crackear contraseñas** usadas por *steghide*.
+- Implementación moderna y optimizada (usa wordlists).
+- Encuentra la passphrase y extrae el contenido en segundos.
+- Ideal para CTFs, análisis forense y auditorías.
+- Ejemplos: `stegseek imagen.jpg`, `stegseek imagen.jpg wordlist.txt`, `stegseek imagen.jpg rockyou.txt --extract`
 
 ### `sublist3r`  
 Herramienta en Python para **enumerar subdominios**.  
