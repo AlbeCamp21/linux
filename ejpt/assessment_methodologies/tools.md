@@ -304,6 +304,17 @@ Cliente para **consultas NetBIOS name service** (parte de Samba).
 - Limitaciones: requiere que NetBIOS/NBNS esté disponible en la red; menos útil en redes modernas que usan solo DNS.  
 - Ejemplos: `nmblookup -A <IP>`, `nmblookup 'WORKGROUP<1>' <IP>`
 
+### `onesixtyone`  
+Herramienta ligera y rápida para **enumerar dispositivos que exponen SNMP** y comprobar *community strings* conocidas o proporcionadas mediante una lista.  
+- Se utiliza principalmente durante la fase de **enumeración de SNMP (UDP/161)** para identificar hosts que responden y descubrir qué *community string* aceptan.  
+- Puede probar una lista de comunidades contra uno o varios objetivos, ayudando a detectar configuraciones débiles como `public` o `private`.  
+- Es más sencilla y rápida que herramientas de enumeración SNMP más completas; una vez identificada una *community string* válida, normalmente se combina con `snmpwalk` o `snmpget` para extraer información de la MIB.  
+- Parámetros comunes: `-c <community>` para especificar una *community string* o archivo de comunidades, `-i <input>` para proporcionar una lista de objetivos y `-o <output>` para guardar resultados.  
+- Uso típico en pentesting: descubrir qué hosts tienen SNMP accesible y validar si aceptan comunidades por defecto o débiles.  
+- Limitaciones: **no realiza una enumeración profunda de la MIB**; su función principal es identificar respuestas SNMP y comunidades válidas. Además, SNMP puede estar filtrado o configurado para usar autenticación/seguridad de SNMPv3, que no se aborda de la misma forma.  
+- Riesgos y ética: probar múltiples *community strings* puede generar tráfico detectable y debe hacerse **solo en laboratorios o entornos explícitamente autorizados**.  
+- Ejemplos: `onesixtyone -c communities.txt <IP>`, `onesixtyone -c public.txt -i targets.txt`, `onesixtyone -c communities.txt -o results.txt 10.10.10.5`
+
 ### `portfwd`  
 Comando de Meterpreter para **reenvío de puertos locales a través de sesiones comprometidas** (port forwarding).  
 - Qué hace: redirige conexiones entrantes en un puerto local de la máquina atacante a un puerto específico en un sistema objetivo accesible desde el host comprometido, creando túneles para herramientas externas.  
@@ -334,7 +345,7 @@ Herramienta que realiza una **recorrida (walk) por la MIB via SNMP** para listar
 - Uso legítimo: monitorización, inventario de hardware, ver estados de interfaces, tablas ARP, información de uptime y versión de SNMP en equipos gestionados.  
 - Soporta versiones SNMP v1/v2c/v3 (seguridad avanzada en v3: usuario/clave/privacidad).  
 - Riesgos: si SNMP community strings son débiles (`public`/`private`) puede filtrar información sensible; atención en redes ajenas.  
-- Ejemplos: `snmpwalk -v2c -c public <IP>`, `snmpwalk -v3 -u user -A authpass -X privpass <IP>`
+- Ejemplos: `snmpwalk -v2c -c <communityString> <IP>`, `snmpwalk -v3 -u user -A authpass -X privpass <IP>`
 
 ### `socat`
 
