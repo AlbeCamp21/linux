@@ -269,14 +269,16 @@ Herramienta de descubrimiento de red basada en ARP.
 - Puede ejecutarse en modo pasivo (escucha ARP) o activo (envía ARP requests).  
 - Ideal para auditorías rápidas de redes WiFi o LAN.  
 
-### `netexec`  
-Framework de post-explotación y **auditoría de servicios remotos** (sucesor de CrackMapExec) orientado a entornos Windows, Linux y protocolos corporativos.  
-- Permite autenticación contra múltiples **protocolos**: SMB, WinRM, SSH, RDP, MSSQL, LDAP, FTP, entre otros, facilitando pruebas a gran escala.  
-- Soporta credenciales en texto claro, hashes NTLM, Kerberos, claves SSH y combinaciones para validación de acceso autorizado.  
-- Incluye **módulos** para enumeración, consulta de políticas, identificación de configuraciones débiles, recolección de información y ejecución remota (según protocolo permitido).  
-- Muy útil para tareas de **movimiento lateral, auditoría de credenciales, inventario de servicios y validación de accesos** dentro de entornos controlados.  
-- Ofrece salidas parseables para integrarlo en pipelines o análisis automatizados; sucesor activo de CME con mejoras constantes.  
-- Ejemplos: `netexec smb <IP_target> -u <user> -p <password>`, `netexec ssh <IP_target> -u <user> -p <password>`, `netexec smb <IP_target> -u <user> -H <NTLM_hash>`, `netexec smb <IP_target> -u <user> -P <password_wordlist.txt>`  
+### `netexec (nxc)`  
+Framework para **enumeración, auditoría y movimiento lateral** en entornos Windows y redes corporativas; es el sucesor moderno de CrackMapExec.  
+- Permite trabajar con múltiples **protocolos**: SMB, WinRM, SSH, RDP, MSSQL, LDAP, FTP, entre otros.  
+- Soporta distintos métodos de autenticación, incluyendo **usuario/contraseña, hashes NTLM y Kerberos**, según el protocolo utilizado.  
+- Incluye funciones y módulos para **enumeración de hosts, usuarios, shares, dominios, políticas, sesiones y servicios**, además de determinadas acciones remotas según los permisos disponibles.  
+- Es muy útil para **validación de credenciales, inventario de servicios, enumeración interna y movimiento lateral** en entornos autorizados.  
+- Es el sucesor de CrackMapExec y mantiene una sintaxis muy similar, por lo que muchos comandos de writeups antiguos pueden adaptarse fácilmente de `crackmapexec` a `nxc`.  
+- Comando: `nxc <protocolo> <IP/host> ...`  
+- Opciones comunes: `-u` usuario, `-p` contraseña, `-H` hash NTLM, `-d` dominio, `-P` wordlist de contraseñas, `--shares` enumeración de shares SMB, `--users` enumeración de usuarios, `--rid-brute` enumeración de usuarios mediante RID.  
+- Ejemplos: `nxc smb <IP_target> -u <user> -p <password>`, `nxc ssh <IP_target> -u <user> -p <password>`, `nxc smb <IP_target> -u <user> -H <NTLM_hash>`, `nxc smb <IP_target> -u <user> -P <password_wordlist.txt>`
 
 ### `nikto`  
 Escáner de vulnerabilidades web que revisa **configuraciones inseguras, archivos sensibles y versiones obsoletas** en servidores HTTP/HTTPS.  
